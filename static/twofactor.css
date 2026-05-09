@@ -1,0 +1,37 @@
+.qr-panel {
+    border-top: 1px solid var(--border);
+    margin: 18px 0;
+    padding-top: 18px;
+}
+
+.qr-panel img {
+    display: block;
+    max-width: 200px;
+    width: 100%;
+    height: auto;
+    margin-bottom: 12px;
+}
+
+.qr-panel strong {
+    overflow-wrap: anywhere;
+}
+
+.token-panel {
+    display: grid;
+    gap: 10px;
+}
+
+.token-code {
+    margin: 0;
+    border: 1px dashed var(--border);
+    border-radius: 6px;
+    background: #f8fafc;
+    color: var(--text);
+    font-family: Consolas, "Courier New", monospace;
+    font-size: 18px;
+    font-weight: 700;
+    letter-spacing: 0;
+    padding: 12px;
+    text-align: center;
+    overflow-wrap: anywhere;
+}
