@@ -1,0 +1,64 @@
+form {
+    display: grid;
+    gap: 10px;
+    margin-bottom: 18px;
+}
+
+label {
+    color: var(--muted);
+    font-size: 14px;
+    font-weight: 700;
+}
+
+input,
+select,
+button {
+    width: 100%;
+    min-height: 42px;
+    border-radius: 6px;
+    font: inherit;
+}
+
+input,
+select {
+    border: 1px solid var(--border);
+    padding: 9px 10px;
+    background: #fff;
+    color: var(--text);
+}
+
+input:focus,
+select:focus {
+    border-color: var(--primary);
+    outline: 3px solid rgba(37, 99, 235, 0.18);
+}
+
+button {
+    margin-top: 6px;
+    border: 0;
+    background: var(--primary);
+    color: #fff;
+    cursor: pointer;
+    font-weight: 700;
+}
+
+button:hover {
+    background: var(--primary-hover);
+}
+
+.message {
+    margin: 0 0 12px;
+    border-radius: 6px;
+    padding: 10px 12px;
+    font-size: 14px;
+}
+
+.message.error {
+    background: var(--error-bg);
+    color: var(--error-text);
+}
+
+.message.success {
+    background: var(--success-bg);
+    color: var(--success-text);
+}
