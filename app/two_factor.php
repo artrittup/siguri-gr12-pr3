@@ -1,8 +1,36 @@
 <?php
 declare(strict_types=1);
 
+use Twilio\Rest\Client;
+
 const BASE32_ALPHABET = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ234567';
 const ISSUER_NAME = '2FA Demo PHP';
+
+function send_sms(string $to, string $message): bool
+{
+    $sid = $_ENV['TWILIO_ACCOUNT_SID'] ?? '';
+    $token = $_ENV['TWILIO_AUTH_TOKEN'] ?? '';
+    $from = $_ENV['TWILIO_FROM'] ?? '';
+
+    if ($sid === '' || $token === '' || $from === '') {
+        error_log('Twilio credentials mungojnë në .env');
+        return false;
+    }
+
+    try {
+        $client = new Client($sid, $token);
+
+        $client->messages->create($to, [
+            'from' => $from,
+            'body' => $message,
+        ]);
+
+        return true;
+    } catch (Throwable $e) {
+        error_log('Twilio error: ' . $e->getMessage());
+        return false;
+    }
+}
 
 function verify_totp_page(): void
 {
@@ -36,14 +64,37 @@ function verify_totp_page(): void
 function verify_sms_page(): void
 {
     $user = pending_user();
+
     if (!$user) {
         redirect_to('login');
     }
 
+    if (!is_post()) {
+        $otp = str_pad((string) random_int(0, 999999), 6, '0', STR_PAD_LEFT);
+
+        $_SESSION['sms_otp'] = $otp;
+        $_SESSION['sms_otp_sent_at'] = time();
+
+        $sent = send_sms($user['phone'], "Kodi juaj i verifikimit është: $otp");
+
+        if (!$sent) {
+            flash('SMS nuk mund të dërgohej. Kontrollo Twilio ose provo përsëri.', 'error');
+            redirect_to('login');
+        }
+    }
+
     if (is_post()) {
         $code = trim($_POST['code'] ?? '');
+        $sentAt = (int) ($_SESSION['sms_otp_sent_at'] ?? 0);
+
+        if ($sentAt === 0 || time() - $sentAt > 300) {
+            unset($_SESSION['sms_otp'], $_SESSION['sms_otp_sent_at']);
+            flash('Kodi SMS ka skaduar. Provo përsëri.', 'error');
+            redirect_to('verify_sms');
+        }
 
         if ($code !== '' && hash_equals((string) ($_SESSION['sms_otp'] ?? ''), $code)) {
+            unset($_SESSION['sms_otp'], $_SESSION['sms_otp_sent_at']);
             finish_login((int) $user['id']);
         }
 
@@ -53,12 +104,6 @@ function verify_sms_page(): void
 
     render_header('Verifiko SMS');
     ?>
-    <section class="qr-panel token-panel">
-        <h3>SMS Demo</h3>
-        <p>Në versionin demo, kodi SMS shfaqet këtu në vend që të dërgohet me shërbim të jashtëm.</p>
-        <p class="token-code"><?= h($_SESSION['sms_otp'] ?? '') ?></p>
-    </section>
-
     <form method="post">
         <label for="code">Kodi SMS</label>
         <input id="code" name="code" inputmode="numeric" autocomplete="one-time-code" required>

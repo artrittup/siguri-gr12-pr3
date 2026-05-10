@@ -106,15 +106,14 @@ function login_page(): void
 
         $_SESSION['pending_user_id'] = (int) $user['id'];
 
-        if ($user['twofa_method'] === 'sms') {
+       if ($user['twofa_method'] === 'sms') {
             if (empty($user['phone'])) {
                 flash('Ky përdorues nuk ka numër telefoni për SMS.', 'error');
                 redirect_to('login');
-            }
+    }
 
-            $_SESSION['sms_otp'] = (string) random_int(100000, 999999);
-            redirect_to('verify_sms');
-        }
+    redirect_to('verify_sms');
+}
 
         if ($user['twofa_method'] === 'hardware') {
             redirect_to('verify_hardware');
@@ -170,7 +169,7 @@ function finish_login(int $userId): never
 {
     session_regenerate_id(true);
     $_SESSION['user_id'] = $userId;
-    unset($_SESSION['pending_user_id'], $_SESSION['sms_otp']);
+    unset($_SESSION['pending_user_id'], $_SESSION['sms_otp'], $_SESSION['sms_otp_sent_at']);
     flash('Hyrja u realizua me sukses.', 'success');
     redirect_to('dashboard');
 }
