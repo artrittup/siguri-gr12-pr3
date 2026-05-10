@@ -1,0 +1,29 @@
+[
+    {
+        "id": 1,
+        "username": "artrit",
+        "password_hash": "$2y$10$iWe9\/kaPmzgJiUQlw7Lo1O3WCnuKeRJZubAfmBEUcueqT5J0O31hS",
+        "phone": "+38345528715",
+        "twofa_method": "totp",
+        "totp_secret": "4I35522LLTVSQB4MJB35QIWXGAIXLPC5",
+        "hardware_token_hash": null
+    },
+    {
+        "id": 2,
+        "username": "telaku",
+        "password_hash": "$2y$10$GQ2odR4\/q31PWg5p7ipFIe1Y7FVB4Czto7jIJ.aSGEht4P.tHnMaS",
+        "phone": "+38345528715",
+        "twofa_method": "sms",
+        "totp_secret": null,
+        "hardware_token_hash": null
+    },
+    {
+        "id": 3,
+        "username": "ola",
+        "password_hash": "$2y$10$5fcZ\/sFn1QPmVz1TWKCd.e5LRcvwJIl4Op5A.16Dq8jwuwqUuTjE2",
+        "phone": "+38345528715",
+        "twofa_method": "hardware",
+        "totp_secret": null,
+        "hardware_token_hash": "$2y$10$O8INNVq2j97t40c2.FvQguYEFRxJM.BWHrugfVNqIA0XvimaEtU8K"
+    }
+]
