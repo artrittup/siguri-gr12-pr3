@@ -25,5 +25,14 @@
         "twofa_method": "hardware",
         "totp_secret": null,
         "hardware_token_hash": "$2y$10$O8INNVq2j97t40c2.FvQguYEFRxJM.BWHrugfVNqIA0XvimaEtU8K"
+    },
+    {
+        "id": 4,
+        "username": "artiola",
+        "password_hash": "$2y$10$6WAxSjP6tOrn8S0zgVqTFuHVHBn1qqOuUK.5jKVfi62KDAIBoazLq",
+        "phone": "+38348197091",
+        "twofa_method": "totp",
+        "totp_secret": "ZLVTUIJHZNBVY77RSR2NXP6AGZKVX3YT",
+        "hardware_token_hash": null
     }
 ]
